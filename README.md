@@ -1,35 +1,90 @@
-# Stock Support Level Calculator
+---
 
-This program calculates and displays three support levels for foreign stocks using historical price data.
+# Stock Support Calculator
 
-## Features
-- Calculates 3 support levels based on historical price data
-- Real-time stock data using Yahoo Finance
-- Simple and intuitive Windows GUI interface
-- Automatic calculation when pressing Enter
+**Stock Support Calculator** เป็นโปรแกรมเดสก์ท็อปที่พัฒนาขึ้นด้วย Python และ Tkinter เพื่อช่วยให้นักลงทุนและนักเทรดวิเคราะห์ข้อมูลหุ้นได้อย่างรวดเร็ว โปรแกรมนี้จะดึงข้อมูลหุ้นจาก Yahoo Finance และคำนวณหาระดับราคาที่สำคัญ เช่น **แนวรับ แนวต้าน ค่าเฉลี่ยเคลื่อนที่ (Moving Averages - MA) ดัชนี RSI และปริมาณการซื้อขาย (Volume)** นอกจากนี้ยังสามารถแสดงผลข้อมูลในรูปแบบกราฟ และให้คุณบันทึกรายงานกราฟเป็นไฟล์ PDF ได้
 
-## Installation
+---
 
-1. Make sure you have Python 3.7 or higher installed
-2. Install the required packages:
-```
-pip install -r requirements.txt
-```
+## คุณสมบัติหลัก
 
-## Usage
+* **ค้นหาข้อมูลหุ้น**: ค้นหาข้อมูลหุ้นจาก Yahoo Finance ได้อย่างง่ายดาย
+* **คำนวณแนวรับและแนวต้าน**: ระบุระดับราคาแนวรับและแนวต้านที่สำคัญ 3 ระดับ
+* **แสดงข้อมูลบริษัท**: แสดงข้อมูลพื้นฐานของบริษัท เช่น ภาคส่วน, อุตสาหกรรม, มูลค่าตลาด, P/E Ratio และอัตราเงินปันผล
+* **วิเคราะห์ทางเทคนิค**:
+    * **Moving Averages (MA)**: แสดงเส้น MA 50 วัน และ 200 วันบนกราฟราคา
+    * **Relative Strength Index (RSI)**: คำนวณและแสดงค่า RSI (14 วัน) พร้อมระดับ Overbought/Oversold
+    * **Volume**: แสดงปริมาณการซื้อขายของหุ้น
+* **แสดงผลกราฟ**: แสดงกราฟราคาและตัวชี้วัดทางเทคนิคแบบโต้ตอบ (Interactive Graph)
+* **บันทึกรายงาน PDF**: บันทึกกราฟการวิเคราะห์เป็นไฟล์ PDF เพื่อการอ้างอิงหรือแบ่งปัน
+* **Watchlist (รายการหุ้นโปรด)**: เพิ่มและจัดการรายการหุ้นที่คุณสนใจ
+* **ประวัติการค้นหา**: จดจำประวัติการค้นหาหุ้นล่าสุด 10 รายการ
 
-1. Run the program:
-```
-python stock_support_calculator.py
-```
+---
 
-2. Enter a stock symbol (e.g., AAPL for Apple, GOOGL for Google)
-3. Press Enter or click "Calculate Support Levels"
-4. The program will display:
-   - Three support levels
-   - Current stock price
+## การติดตั้งและการใช้งาน
 
-## Notes
-- Stock symbols should be entered in their standard format (e.g., AAPL, GOOGL, MSFT)
-- The program uses 1 year of historical data to calculate support levels
-- Support levels are calculated based on recent price lows 
+### ข้อกำหนดเบื้องต้น
+
+* **Python 3.x**: ตรวจสอบให้แน่ใจว่าคุณได้ติดตั้ง Python 3.x แล้ว สามารถดาวน์โหลดได้จาก [python.org](https://www.python.org/)
+
+### การติดตั้ง
+
+1.  **โคลน (Clone) Repository** (หากมี):
+    ```bash
+    git clone [URL_OF_YOUR_REPO]
+    cd stock-support-calculator
+    ```
+    หรือดาวน์โหลดไฟล์โปรเจกต์ทั้งหมด
+
+2.  **ติดตั้ง Library ที่จำเป็น**:
+    เปิด Command Prompt (CMD) หรือ Terminal แล้วรันคำสั่ง:
+    ```bash
+    pip install tkinter yfinance pandas matplotlib
+    ```
+    * `tkinter`: สำหรับสร้างส่วนต่อประสานผู้ใช้แบบกราฟิก (GUI) (โดยปกติจะมาพร้อมกับ Python)
+    * `yfinance`: สำหรับดึงข้อมูลหุ้นจาก Yahoo Finance
+    * `pandas`: สำหรับจัดการข้อมูล
+    * `matplotlib`: สำหรับการสร้างกราฟ
+
+### การเรียกใช้งาน
+
+1.  ไปที่ไดเรกทอรีของโปรเจกต์
+2.  รันไฟล์ `stock_support_calculator.py` ด้วย Python:
+    ```bash
+    python stock_support_calculator.py
+    ```
+
+---
+
+## วิธีใช้งานโปรแกรม
+
+1.  **กรอกรหัสหุ้น**: ในช่อง "รหัสหุ้น" ให้พิมพ์รหัสหุ้นที่คุณต้องการวิเคราะห์ (เช่น `AAPL` สำหรับ Apple, `MSFT` สำหรับ Microsoft)
+2.  **เลือกระยะเวลา**: เลือกช่วงเวลาของข้อมูลย้อนหลังที่คุณต้องการใช้ในการคำนวณจากเมนู "ช่วงเวลา"
+3.  **คลิก "คำนวณ"**: โปรแกรมจะดึงข้อมูลและแสดงผลราคาล่าสุด แนวรับ แนวต้าน และข้อมูลบริษัท
+4.  **ดูกราฟ**: หากต้องการดูกราฟ ให้คลิกที่ปุ่ม "ดูกราฟ" เพื่อสลับไปยังหน้าจอกราฟ คุณสามารถใช้เครื่องมือบน Toolbar ของกราฟเพื่อซูม เลื่อน หรือบันทึกได้
+5.  **บันทึกเป็น PDF**: หากต้องการบันทึกกราฟเป็นไฟล์ PDF ให้คลิกที่ปุ่ม "บันทึกกราฟเป็น PDF"
+6.  **จัดการ Watchlist**:
+    * **เพิ่มหุ้น**: กรอกรหัสหุ้นในช่อง "รหัสหุ้น" แล้วคลิก "เพิ่ม" ที่ส่วน "รายการหุ้นโปรด"
+    * **ลบหุ้น**: เลือกหุ้นในรายการแล้วคลิก "ลบ"
+    * **เลือกหุ้นจาก Watchlist**: คลิกที่หุ้นในรายการเพื่อโหลดข้อมูลและคำนวณทันที
+
+---
+
+## การแก้ไขปัญหา
+
+* **"ไม่มีการเชื่อมต่ออินเทอร์เน็ต"**: ตรวจสอบการเชื่อมต่ออินเทอร์เน็ตของคุณ
+* **"ไม่พบข้อมูลหุ้นที่ถูกต้อง"**: ตรวจสอบว่ารหัสหุ้นที่คุณกรอกถูกต้อง และมีข้อมูลอยู่ใน Yahoo Finance
+* **ปัญหาเกี่ยวกับกราฟ**: ตรวจสอบว่าคุณได้ติดตั้ง `matplotlib` ถูกต้อง หากปัญหายังคงอยู่ ลองรีสตาร์ทโปรแกรม
+
+---
+
+## การพัฒนาเพิ่มเติม (Potential Enhancements)
+
+* เพิ่มตัวชี้วัดทางเทคนิคอื่นๆ (เช่น MACD, Bollinger Bands)
+* รองรับการเลือกวันที่เองสำหรับข้อมูลย้อนหลัง
+* เพิ่มฟังก์ชันการแจ้งเตือนราคา
+* ปรับปรุง UI ให้มีความสวยงามและใช้งานง่ายยิ่งขึ้น
+* รองรับการบันทึกและโหลดการตั้งค่าผู้ใช้
+
+---
