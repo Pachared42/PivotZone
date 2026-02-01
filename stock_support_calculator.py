@@ -7,31 +7,28 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolb
 import socket
 from datetime import datetime
 
-# --- ตั้งค่า Matplotlib สำหรับการแสดงผลกราฟ ---
-plt.style.use("default")
-plt.rcParams['font.family'] = 'Tahoma' # ใช้ฟอนต์ Tahoma
-plt.rcParams['axes.facecolor'] = 'white'
-plt.rcParams['figure.facecolor'] = 'white'
-plt.rcParams['axes.labelcolor'] = 'black'
-plt.rcParams['xtick.color'] = 'black'
-plt.rcParams['ytick.color'] = 'black'
-plt.rcParams['text.color'] = 'black'
-plt.rcParams['grid.color'] = '#e0e0e0'
-plt.rcParams['grid.alpha'] = 0.7
+plt.style.use("seaborn-v0_8-whitegrid")
+plt.rcParams.update({
+    "font.family": "Tahoma",
+    "axes.facecolor": "#ffffff",
+    "figure.facecolor": "#ffffff",
+    "axes.edgecolor": "#e5e7eb",
+    "axes.labelcolor": "#111827",
+    "xtick.color": "#6b7280",
+    "ytick.color": "#6b7280",
+    "grid.color": "#e5e7eb",
+    "grid.alpha": 0.8,
+})
 
 class StockSupportCalculator:
     def __init__(self, root):
-        """
-        เริ่มต้นโปรแกรม Stock Support Calculator
-        """
         self.root = root
         self.root.title("โปรแกรมวิเคราะห์หุ้น: แนวรับ, แนวต้าน, MA, RSI, Volume")
         
-        # ตั้งค่าให้หน้าต่างเป็น Fullscreen และสามารถกด Esc เพื่อออกได้
         self.root.attributes("-fullscreen", True)
         self.root.bind("<Escape>", lambda e: self.root.attributes("-fullscreen", False))
-        self.root.configure(bg="#ffffff") # สีพื้นหลังของหน้าต่างหลัก
-        self.root.option_add("*Font", ("Tahoma", 13)) # ตั้งค่าฟอนต์เริ่มต้นสำหรับทุก widget
+        self.root.configure(bg="#ffffff")
+        self.root.option_add("*Font", ("Tahoma", 13))
 
         self._setup_styles() # ตั้งค่า Style สำหรับ ttk widgets
         
@@ -671,7 +668,8 @@ class StockSupportCalculator:
             self.dividend_label.config(text=f"{dividend_yield*100:.2f}%" if dividend_yield else "N/A")
             
             # อัปเดตราคาล่าสุดและแนวรับ แนวต้าน
-            self.price_label.config(text=f"ราคาปิดล่าสุด: {hist['Close'][-1]:.2f} USD")
+            last_close = hist['Close'].iloc[-1]
+            self.price_label.config(text=f"ราคาปิดล่าสุด: {last_close:.2f} USD")
             
             for i, level in enumerate(supports):
                 self.support_labels[i].config(text=f"{level:.2f} USD")
